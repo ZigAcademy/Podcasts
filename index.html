@@ -36,7 +36,12 @@
 
   <script>
     fetch('podcasts.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Kan podcasts.json niet laden');
+        }
+        return response.json();
+      })
       .then(data => {
         const container = document.getElementById('podcast-list');
         data.forEach(podcast => {
