@@ -23,7 +23,7 @@ jobs:
     - name: Run podcast generator
       run: python generate_podcasts.py
 
-- name: Commit and push updated podcasts.json
+    - name: Commit and push updated podcasts.json
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
       run: |
