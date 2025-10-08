@@ -23,11 +23,13 @@ jobs:
     - name: Run podcast generator
       run: python generate_podcasts.py
 
-    - name: Commit and push updated podcasts.json
+- name: Commit and push updated podcasts.json
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
+        git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
         git add podcasts.json
-        git commit -m "Automatisch bijgewerkte podcasts.json"
+        git commit -m "Automatisch bijgewerkte podcasts.json" || echo "Geen wijzigingen om te committen"
         git push
-      continue-on-error: true
