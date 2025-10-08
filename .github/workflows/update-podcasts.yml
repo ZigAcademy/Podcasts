@@ -2,6 +2,8 @@ name: Update Podcasts Index
 
 on:
   push:
+    branches:
+      - main
     paths:
       - '**/index.html'
       - 'generate_podcasts.py'
@@ -31,4 +33,4 @@ jobs:
         git config --global user.email "action@github.com"
         git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
         git add podcasts.json
-        git diff --cached --quiet || (git commit -m "Automatisch bijgewerkte podcasts.json" && git push)
+        git diff --cached --quiet || (git commit -m "Automatisch bijgewerkte podcasts.json" && git push origin HEAD)
