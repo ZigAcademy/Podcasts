@@ -1,0 +1,33 @@
+name: Update Podcasts Index
+
+on:
+  push:
+    paths:
+      - '**/index.html'
+      - 'generate_podcasts.py'
+      - '.github/workflows/update-podcasts.yml'
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Run podcast generator
+      run: python generate_podcasts.py
+
+    - name: Commit and push updated podcasts.json
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add podcasts.json
+        git commit -m "Automatisch bijgewerkte podcasts.json"
+        git push
+      continue-on-error: true
