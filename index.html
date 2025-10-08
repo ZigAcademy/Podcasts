@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Podcast Index</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+    }
+    h1 {
+      color: #1F59FF;
+    }
+    .podcast-link {
+      background-color: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+    }
+    .podcast-link:hover {
+      background-color: #e0e0e0;
+    }
+    a {
+      text-decoration: none;
+      color: #1F59FF;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎙️ Podcast Overzicht</h1>
+  <div id="podcast-list"></div>
+
+  <script>
+    fetch('podcasts.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('podcast-list');
+        data.forEach(podcast => {
+          const div = document.createElement('div');
+          div.className = 'podcast-link';
+          const link = document.createElement('a');
+          link.href = podcast.path;
+          link.textContent = podcast.title;
+          div.appendChild(link);
+          container.appendChild(div);
+        });
+      })
+      .catch(error => {
+        console.error('Fout bij het laden van podcasts:', error);
+      });
+  </script>
+</body>
+</html>
